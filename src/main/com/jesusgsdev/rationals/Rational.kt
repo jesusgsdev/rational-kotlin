@@ -2,11 +2,7 @@ package jesusgsdev.rationals
 
 import java.math.BigInteger
 
-class Rational(val n: BigInteger, val d: BigInteger) : Comparable<Rational>, ClosedRange<Rational>{
-    override val endInclusive: Rational
-        get() = this
-    override val start: Rational
-        get() = this
+class Rational(val n: BigInteger, val d: BigInteger) : Comparable<Rational> {
 
     operator fun plus(r: Rational): Rational = (n.times(r.d).plus(r.n.times(d))).divBy(r.d.times(d))
 
@@ -58,13 +54,12 @@ infix fun Long.divBy(r2: Long) : Rational = Rational(toBigInteger(), r2.toBigInt
 infix fun BigInteger.divBy(r2: BigInteger) : Rational = Rational(this, r2)
 
 fun String.toRational(): Rational {
-    val arrayOfValues = split("/")
+    val number = split("/")
 
-    if(arrayOfValues.size == 1){
-        return Rational(arrayOfValues[0].toBigInteger(), 1.toBigInteger())
+    when {
+        number.size == 1 -> return Rational(number[0].toBigInteger(), 1.toBigInteger())
+        else -> return Rational(number[0].toBigInteger(), number[1].toBigInteger())
     }
-
-    return Rational(arrayOfValues[0].toBigInteger(), arrayOfValues[1].toBigInteger())
 }
 
 fun hcf(n1: BigInteger, n2: BigInteger): BigInteger =
